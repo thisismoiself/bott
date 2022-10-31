@@ -1,5 +1,7 @@
 const Discord = require('discord.js');
 
+const fetch = require("fetch")
+
 const client = new Discord.Client();
 
 const prefix = '~';
@@ -67,5 +69,8 @@ client.on('message', message => {
     }
 });
 
-client.login('Nzg2MDAzNzEyODc5MDk5OTA1.Gy92dS.xeBqPg_cn7d5eGHZn_hkEMbpCEuTP-4fOHUIKE');
+var file_content = fs.readFileSync('./resources/credentials.json');
+const token = JSON.parse(file_content).token;
+
+client.login(token).then((val => {console.log("Successful login.");}), err => {console.log("Invalid token.")});
 
