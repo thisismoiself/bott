@@ -8,6 +8,7 @@ const prefix = '~';
 
 const fs = require('fs');
 
+
 const Endb = require('endb');
 
 const separatorString = "-------------------------------";
@@ -40,7 +41,8 @@ client.on('message', message => {
     console.log(`${message.author.username} (${message.author.id}) : "${message.content}" | ${message.channel.name} on ${message.guild.name}`);
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-
+    	
+    
     //For dev, enables only users with a certain role to use the bot.
     if(!message.member.roles.cache.has('1036698873919459408')) {
         message.channel.send("No permission.");
@@ -64,6 +66,9 @@ client.on('message', message => {
         case 'createteam':
             client.commands.get('createteam').execute(message, args);            
             break;
+        case 'stretch':
+            client.commands.get('stretch').execute(message, args);
+            break;
         default:
             console.log(`Received non-existing command: ${message}`);
     }
@@ -72,5 +77,5 @@ client.on('message', message => {
 var file_content = fs.readFileSync('./resources/credentials.json');
 const token = JSON.parse(file_content).token;
 
-client.login(token).then((val => {console.log("Successful login.");}), err => {console.log("Invalid token.")});
+client.login(token).then((val => {console.log("Successful login.");}), err => {console.log("Invalid token or issue with connection.")});
 
