@@ -1,16 +1,11 @@
 const Discord = require('discord.js');
-
+const fs = require('fs');
 const fetch = require("fetch")
+const Endb = require('endb');
 
 const client = new Discord.Client();
 
 const prefix = '~';
-
-const fs = require('fs');
-
-
-const Endb = require('endb');
-
 const separatorString = "-------------------------------";
 
 client.commands = new Discord.Collection();
@@ -21,7 +16,6 @@ for (const file of commandFiles) {
 
     client.commands.set(command.name, command);
 }
-
 
 client.once('ready', () => {
     console.log(separatorString)
@@ -39,6 +33,11 @@ client.on('message', message => {
     
     //Console.log's every incoming chat message
     console.log(`${message.author.username} (${message.author.id}) : "${message.content}" | ${message.channel.name} on ${message.guild.name}`);
+
+    //respond to every incoming chat msg that starts with "warum" with "Darum." (to annoy people)
+    if (message.content.toLowerCase().startsWith("warum")) {
+        message.channel.send("Darum.");
+    }
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
 
