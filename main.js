@@ -41,22 +41,23 @@ client.on('message', message => {
     console.log(`${message.author.username} (${message.author.id}) : "${message.content}" | ${message.channel.name} on ${message.guild.name}`);
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
-    	
-    /*
-    //For dev, enables only users with a certain role to use the bot.
-    if(!message.member.roles.cache.has('1036698873919459408')) {
-        message.channel.send("No permission.");
-        return;
-    }
-    */
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
     const botCommand = client.commands.get(command);
     if(!botCommand) {
-        console.log(`Received non-existing command: ${message}`);
+        console.log(`Invalid command: ${message}`);
         message.channel.send("Invalid command.");
+        return;
+    }
+    if(args.length > 0 && args[0].toLowerCase() == 'help') {
+        message.channel
+        .send(botCommand.help).then(x => {})
+        .catch(e => {
+            console.log(`No help for "${botCommand.name}" available.`);
+            message.channel.send("No help is coming :( (Not available)");
+        });
         return;
     }
     botCommand.execute(message, args);

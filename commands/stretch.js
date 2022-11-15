@@ -2,8 +2,11 @@ const crypto = require('crypto');
 const download = require('image-downloader');
 const sharp = require("sharp");
 
-const usageString = `Usage: \n *~stretch [WIDTH_FACTOR] [HEIGHT_FACTOR] \n~stretch [FACTOR]*`
-const helpString = `${usageString}\n Stretch or compress an image by a certain FACTOR (=WIDTH_FACTOR / HEIGHT_FACTOR).`
+const usageString = `Usage:
+~stretch [WIDTH_FACTOR] [HEIGHT_FACTOR]
+~stretch [FACTOR]`;
+const helpString = `${usageString}
+Stretch or compress an image by a certain FACTOR (=WIDTH_FACTOR / HEIGHT_FACTOR).`
 
 
 function addIntoURL(fileURL, ins) {
@@ -48,6 +51,7 @@ async function resizeImage(imgPath, newPath, factor) {
 module.exports = {
     name: 'stretch',
     description: "Stretch any image",
+	help: helpString,
     execute(message, args) {
 		if(args.length >= 1 && args[0] === "help") {
 			message.channel.send(helpString);

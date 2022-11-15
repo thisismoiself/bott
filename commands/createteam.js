@@ -1,6 +1,7 @@
 module.exports = {
     name: 'createteam',
     description: "Create a team on your Discord Server",
+    help: "NOT WORKING",
     execute(message, args) {
         
         return;
