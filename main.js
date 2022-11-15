@@ -42,36 +42,24 @@ client.on('message', message => {
 
     if (!message.content.startsWith(prefix) || message.author.bot) return;
     	
-    
+    /*
     //For dev, enables only users with a certain role to use the bot.
     if(!message.member.roles.cache.has('1036698873919459408')) {
         message.channel.send("No permission.");
         return;
     }
+    */
 
     const args = message.content.slice(prefix.length).split(/ +/);
     const command = args.shift().toLowerCase();
 
-
-    switch(command) {
-        case 'ping':
-            client.commands.get('ping').execute(message, args);
-            break;
-        case 'youtube':
-        	client.commands.get('youtube').execute(message, args);
-            break;
-        case 'test':
-            client.commands.get('test').execute(message, args);
-            break;
-        case 'createteam':
-            client.commands.get('createteam').execute(message, args);            
-            break;
-        case 'stretch':
-            client.commands.get('stretch').execute(message, args);
-            break;
-        default:
-            console.log(`Received non-existing command: ${message}`);
+    const botCommand = client.commands.get(command);
+    if(!botCommand) {
+        console.log(`Received non-existing command: ${message}`);
+        message.channel.send("Invalid command.");
+        return;
     }
+    botCommand.execute(message, args);
 });
 
 var file_content = fs.readFileSync('./resources/credentials.json');
