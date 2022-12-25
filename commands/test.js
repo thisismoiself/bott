@@ -4,6 +4,5 @@ module.exports = {
     help: "STOP TESTING.",
     execute(message, args) {
         message.channel.send("STOP TESTING.");
-
     }
 }

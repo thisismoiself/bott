@@ -52,7 +52,7 @@ module.exports = {
     name: 'stretch',
     description: "Stretch any image",
 	help: helpString,
-    execute(message, args) {
+    async execute(message, args) {
 		if(args.length >= 1 && args[0] === "help") {
 			message.channel.send(helpString);
 			return;
@@ -88,10 +88,12 @@ module.exports = {
 			return;
 		}
 
-		downloadImage(img.proxyURL, `../../images/${newPath}`).then(x => {
-			resizeImage(`images/${newPath}`, newTotalPath, factor).then(xx => {
-				message.channel.send({ files: [{ attachment: newTotalPath }] }).catch(e => {message.channel.send("Failed to process your image :(")});
-			}); 	
-		});
+			await downloadImage(img.proxyURL, `../../images/${newPath}`)
+			await resizeImage(`images/${newPath}`, newTotalPath, factor)
+			try {
+				await message.channel.send({ files: [{ attachment: newTotalPath }] });
+			} catch (e) {
+				message.channel.send("Failed to process your image :(");
+			}
     }
 }
